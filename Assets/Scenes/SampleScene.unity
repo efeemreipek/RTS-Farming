@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5fe2f5c4939f74fb2317ffef7befb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
+  maxSpeed: 15
   acceleration: 10
   damping: 15
   stepSize: 2
@@ -346,7 +346,7 @@ MonoBehaviour:
   minHeight: 5
   maxHeight: 25
   zoomSpeed: 2
-  maxRotationSpeed: 1
+  maxRotationSpeed: 0.5
   edgeTolerance: 0.05
   useScreenEdge: 0
 --- !u!4 &528479434
@@ -443,7 +443,7 @@ Transform:
   m_GameObject: {fileID: 950378849}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: -10}
+  m_LocalPosition: {x: 0, y: 10, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

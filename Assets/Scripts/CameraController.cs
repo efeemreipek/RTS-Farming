@@ -160,7 +160,7 @@ public class CameraController : MonoBehaviour
     private void UpdateCameraPosition()
     {
         Vector3 zoomTarget = new Vector3(cameraTransform.localPosition.x, zoomHeight, cameraTransform.localPosition.z);
-        zoomTarget -= zoomSpeed * (zoomHeight - cameraTransform.localPosition.y) * Vector3.down;
+        zoomTarget -= zoomSpeed * (zoomHeight - cameraTransform.localPosition.y) * (Vector3.down + Vector3.forward);
 
         cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, zoomTarget, Time.deltaTime * zoomDampening);
         cameraTransform.LookAt(_transform);
