@@ -53,6 +53,33 @@ public partial class @GameControlActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""a256f30d-08d1-4a74-abde-d2079fa68b55"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseLeftClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""59d3358f-8000-45fc-9ae7-0eadcecb09bb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseRightClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""2da394fd-e5eb-4662-ac76-efa18ac01834"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +159,39 @@ public partial class @GameControlActions: IInputActionCollection2, IDisposable
                     ""action"": ""ZoomCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51a66d50-9a2d-453f-8b92-cf4c25ddae6c"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8a9e75f-a99a-475e-bac8-0b59629d7817"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLeftClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ac3c8d08-b811-483e-9c07-4c068cf835e0"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseRightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +203,9 @@ public partial class @GameControlActions: IInputActionCollection2, IDisposable
         m_Game_MoveCamera = m_Game.FindAction("MoveCamera", throwIfNotFound: true);
         m_Game_RotateCamera = m_Game.FindAction("RotateCamera", throwIfNotFound: true);
         m_Game_ZoomCamera = m_Game.FindAction("ZoomCamera", throwIfNotFound: true);
+        m_Game_MousePosition = m_Game.FindAction("MousePosition", throwIfNotFound: true);
+        m_Game_MouseLeftClick = m_Game.FindAction("MouseLeftClick", throwIfNotFound: true);
+        m_Game_MouseRightClick = m_Game.FindAction("MouseRightClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +270,9 @@ public partial class @GameControlActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_MoveCamera;
     private readonly InputAction m_Game_RotateCamera;
     private readonly InputAction m_Game_ZoomCamera;
+    private readonly InputAction m_Game_MousePosition;
+    private readonly InputAction m_Game_MouseLeftClick;
+    private readonly InputAction m_Game_MouseRightClick;
     public struct GameActions
     {
         private @GameControlActions m_Wrapper;
@@ -214,6 +280,9 @@ public partial class @GameControlActions: IInputActionCollection2, IDisposable
         public InputAction @MoveCamera => m_Wrapper.m_Game_MoveCamera;
         public InputAction @RotateCamera => m_Wrapper.m_Game_RotateCamera;
         public InputAction @ZoomCamera => m_Wrapper.m_Game_ZoomCamera;
+        public InputAction @MousePosition => m_Wrapper.m_Game_MousePosition;
+        public InputAction @MouseLeftClick => m_Wrapper.m_Game_MouseLeftClick;
+        public InputAction @MouseRightClick => m_Wrapper.m_Game_MouseRightClick;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +301,15 @@ public partial class @GameControlActions: IInputActionCollection2, IDisposable
             @ZoomCamera.started += instance.OnZoomCamera;
             @ZoomCamera.performed += instance.OnZoomCamera;
             @ZoomCamera.canceled += instance.OnZoomCamera;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
+            @MouseLeftClick.started += instance.OnMouseLeftClick;
+            @MouseLeftClick.performed += instance.OnMouseLeftClick;
+            @MouseLeftClick.canceled += instance.OnMouseLeftClick;
+            @MouseRightClick.started += instance.OnMouseRightClick;
+            @MouseRightClick.performed += instance.OnMouseRightClick;
+            @MouseRightClick.canceled += instance.OnMouseRightClick;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -245,6 +323,15 @@ public partial class @GameControlActions: IInputActionCollection2, IDisposable
             @ZoomCamera.started -= instance.OnZoomCamera;
             @ZoomCamera.performed -= instance.OnZoomCamera;
             @ZoomCamera.canceled -= instance.OnZoomCamera;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
+            @MouseLeftClick.started -= instance.OnMouseLeftClick;
+            @MouseLeftClick.performed -= instance.OnMouseLeftClick;
+            @MouseLeftClick.canceled -= instance.OnMouseLeftClick;
+            @MouseRightClick.started -= instance.OnMouseRightClick;
+            @MouseRightClick.performed -= instance.OnMouseRightClick;
+            @MouseRightClick.canceled -= instance.OnMouseRightClick;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -267,5 +354,8 @@ public partial class @GameControlActions: IInputActionCollection2, IDisposable
         void OnMoveCamera(InputAction.CallbackContext context);
         void OnRotateCamera(InputAction.CallbackContext context);
         void OnZoomCamera(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
+        void OnMouseLeftClick(InputAction.CallbackContext context);
+        void OnMouseRightClick(InputAction.CallbackContext context);
     }
 }
