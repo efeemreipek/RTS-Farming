@@ -11,7 +11,7 @@ public class UnitSelector : MonoBehaviour
 
     private Camera _camera;
     private List<Unit> allUnitsList = new List<Unit>();
-    private Unit selectedUnit;
+    private List<Unit> selectedUnitsList = new List<Unit>();
 
     private void Awake()
     {
@@ -56,27 +56,71 @@ public class UnitSelector : MonoBehaviour
 
         if(Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if(hit.collider.TryGetComponent(out Unit unit))
+            if(hit.collider.TryGetComponent(out Unit unit)) // Clicked on a unit
             {
-                selectedUnit = unit;
-                foreach(Unit _unit in allUnitsList)
+                if (Keyboard.current.leftShiftKey.isPressed) // Multiple unit selection with shift
                 {
-                    if(_unit == selectedUnit)
-                    {
-                        _unit.SetThisUnitSelected();
-                    }
-                    else
-                    {
-                        _unit.SetThisUnitUnselected();
-                    }
+                    SelectMultipleUnitWithShift(unit);
+                }
+                else // Single unit selection
+                {
+                    SelectSingleUnit(unit);
                 }
 
                 Debug.Log("You clicked on " + hit.collider.gameObject.name);
+            }
+            else // Clicked on something else. So deselect all units
+            {
+                DeselectAllUnits();
             }
         }
 
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 1f);
     }
 
-    public Unit GetSelectedUnit() => selectedUnit;
+    public List<Unit> GetSelectedUnitsList() => selectedUnitsList;
+
+    private void DeselectAllUnits()
+    {
+        for (int i = selectedUnitsList.Count - 1; i >= 0; i--)
+        {
+            selectedUnitsList[i].SetThisUnitUnselected();
+            selectedUnitsList.RemoveAt(i);
+        }
+    }
+
+    private void SelectSingleUnit(Unit unit)
+    {
+        DeselectAllUnits();
+        selectedUnitsList.Add(unit);
+
+        foreach (Unit _unit in allUnitsList)
+        {
+            if (selectedUnitsList.Contains(_unit))
+            {
+                _unit.SetThisUnitSelected();
+            }
+            else
+            {
+                _unit.SetThisUnitUnselected();
+            }
+        }
+    }
+
+    private void SelectMultipleUnitWithShift(Unit unit)
+    {
+        selectedUnitsList.Add(unit);
+
+        foreach (Unit _unit in allUnitsList)
+        {
+            if (selectedUnitsList.Contains(_unit))
+            {
+                _unit.SetThisUnitSelected();
+            }
+            else
+            {
+                _unit.SetThisUnitUnselected();
+            }
+        }
+    }
 }

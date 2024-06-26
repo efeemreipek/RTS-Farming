@@ -45,8 +45,14 @@ public class UnitMover : MonoBehaviour
         {
             if (hit.collider.CompareTag("Ground"))
             {
-                Unit selectedUnit = unitSelector.GetSelectedUnit();
-                selectedUnit.GetComponent<NavMeshAgent>().SetDestination(hit.point);
+                List<Unit> selectedUnitsList = unitSelector.GetSelectedUnitsList();
+                foreach(Unit selectedUnit in selectedUnitsList)
+                {
+                    if (selectedUnit != null)
+                    {
+                        selectedUnit.GetComponent<NavMeshAgent>().SetDestination(hit.point);
+                    }
+                }
             }
         }
     }
