@@ -50,7 +50,8 @@ public class UnitMover : MonoBehaviour
                 {
                     if (selectedUnit != null)
                     {
-                        selectedUnit.GetComponent<NavMeshAgent>().SetDestination(hit.point);
+                        NavMeshAgent unitNMA = selectedUnit.GetComponent<NavMeshAgent>();
+                        unitNMA.SetDestination(hit.point);
                     }
                 }
             }

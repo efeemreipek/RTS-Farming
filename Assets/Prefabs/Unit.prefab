@@ -1269,6 +1269,7 @@ GameObject:
   - component: {fileID: 5810303209445171737}
   - component: {fileID: 3922376643239518241}
   - component: {fileID: 4416630014193181250}
+  - component: {fileID: 8739073719160386033}
   - component: {fileID: 2918607722366395579}
   m_Layer: 0
   m_Name: Unit
@@ -1305,7 +1306,7 @@ Animator:
   m_GameObject: {fileID: 5876730287558578994}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 317a56890b5c8e74ab1d492a2c7fb608, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 278d82cb2f5d77844a7ccddbe5507c7e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1350,6 +1351,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedQuad: {fileID: 8157658840778501811}
+--- !u!114 &8739073719160386033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876730287558578994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd73db5a0a2529445a25cc69d64ef4f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &2918607722366395579
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1361,10 +1374,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 5
-  m_Acceleration: 10
+  m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 720
-  m_StoppingDistance: 0
+  m_AngularSpeed: 1440
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
