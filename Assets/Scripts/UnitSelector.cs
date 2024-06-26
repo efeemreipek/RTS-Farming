@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class UnitSelector : MonoBehaviour
 {
+    [SerializeField] private RectTransform selectionBoxVisual;
+
     private GameControlActions gameControlActions;
     private InputAction mousePosition;
     private InputAction mouseLeftClick;
@@ -13,10 +15,19 @@ public class UnitSelector : MonoBehaviour
     private List<Unit> allUnitsList = new List<Unit>();
     private List<Unit> selectedUnitsList = new List<Unit>();
 
+    //Multiple selection box variables
+    private Rect selectionBox;
+    private Vector2 startPosition;
+    private Vector2 endPosition;
+
     private void Awake()
     {
         gameControlActions = new GameControlActions();
         _camera = Camera.main;
+
+        startPosition = Vector2.zero;
+        endPosition = Vector2.zero;
+        DrawVisual();
     }
 
     private void OnEnable()
@@ -24,7 +35,9 @@ public class UnitSelector : MonoBehaviour
         mousePosition = gameControlActions.Game.MousePosition;
         mouseLeftClick = gameControlActions.Game.MouseLeftClick;
 
+        mouseLeftClick.started += MouseLeftClick_Started;
         mouseLeftClick.performed += MouseLeftClick_Performed;
+        mouseLeftClick.canceled += MouseLeftClick_Canceled;
         gameControlActions.Enable();
     }
 
@@ -39,18 +52,39 @@ public class UnitSelector : MonoBehaviour
 
     private void OnDisable()
     {
+        mouseLeftClick.started -= MouseLeftClick_Started;
         mouseLeftClick.performed -= MouseLeftClick_Performed;
+        mouseLeftClick.canceled -= MouseLeftClick_Canceled;
         gameControlActions.Disable();
     }
 
-    private Vector2 GetMousePosition()
+    private void Update()
     {
-        return mousePosition.ReadValue<Vector2>();
+        if (mouseLeftClick.IsPressed()) // If mouse left click pressed down then draw selection box visual
+        {
+            endPosition = GetMousePosition();
+            DrawVisual();
+            DrawSelection();
+        }
+    }
+
+    private Vector2 GetMousePosition() => mousePosition.ReadValue<Vector2>();
+
+    private void MouseLeftClick_Started(InputAction.CallbackContext inputValue)
+    {
+        startPosition = GetMousePosition();
+        selectionBox = new Rect();
+    }
+    private void MouseLeftClick_Canceled(InputAction.CallbackContext inputValue)
+    {
+        SelectUnitsInSelectionBox();
+        startPosition = Vector2.zero;
+        endPosition = Vector2.zero;
+        DrawVisual();
     }
 
     private void MouseLeftClick_Performed(InputAction.CallbackContext inputValue)
     {
-
         Ray ray = _camera.ScreenPointToRay(GetMousePosition());
         RaycastHit hit;
 
@@ -109,6 +143,26 @@ public class UnitSelector : MonoBehaviour
 
     private void SelectMultipleUnitWithShift(Unit unit)
     {
+        if (!selectedUnitsList.Contains(unit))
+        {
+            selectedUnitsList.Add(unit);
+        }
+
+        foreach (Unit _unit in allUnitsList)
+        {
+            if (selectedUnitsList.Contains(_unit))
+            {
+                _unit.SetThisUnitSelected();
+            }
+            else
+            {
+                _unit.SetThisUnitUnselected();
+            }
+        }
+    }
+
+    private void SelectMultipleUnitWithBox(Unit unit)
+    {
         selectedUnitsList.Add(unit);
 
         foreach (Unit _unit in allUnitsList)
@@ -120,6 +174,64 @@ public class UnitSelector : MonoBehaviour
             else
             {
                 _unit.SetThisUnitUnselected();
+            }
+        }
+    }
+
+    private void DrawVisual()
+    {
+        Vector2 boxStart = startPosition;
+        Vector2 boxEnd = endPosition;
+
+        Vector2 boxCenter = (boxStart + boxEnd) * 0.5f;
+        selectionBoxVisual.position = boxCenter;
+
+        Vector2 boxSize = new Vector2 (Mathf.Abs(boxStart.x - boxEnd.x), Mathf.Abs(boxStart.y - boxEnd.y));
+
+        selectionBoxVisual.sizeDelta = boxSize;
+
+    }
+
+    private void DrawSelection()
+    {
+        if(GetMousePosition().x < startPosition.x) 
+        {
+            // dragging left
+            selectionBox.xMin = GetMousePosition().x;
+            selectionBox.xMax = startPosition.x;
+
+        }
+        else
+        {
+            // dragging right
+            selectionBox.xMin = startPosition.x;
+            selectionBox.xMax = GetMousePosition().x;
+
+        }
+
+        if(GetMousePosition().y < startPosition.y)
+        {
+            // dragging down
+            selectionBox.yMin = GetMousePosition().y;
+            selectionBox.yMax = startPosition.y;
+
+        }
+        else
+        {
+            // dragging up
+            selectionBox.yMin = startPosition.y;
+            selectionBox.yMax = GetMousePosition().y;
+
+        }
+    }
+
+    private void SelectUnitsInSelectionBox()
+    {
+        foreach(Unit unit in allUnitsList)
+        {
+            if (selectionBox.Contains(_camera.WorldToScreenPoint(unit.transform.position)))
+            {
+                SelectMultipleUnitWithBox(unit);
             }
         }
     }
