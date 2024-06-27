@@ -118,7 +118,7 @@ public class UnitSelector : MonoBehaviour
     {
         for (int i = selectedUnitsList.Count - 1; i >= 0; i--)
         {
-            selectedUnitsList[i].SetThisUnitUnselected();
+            selectedUnitsList[i].SetThisUnitSelected(false);
             selectedUnitsList.RemoveAt(i);
         }
     }
@@ -132,11 +132,11 @@ public class UnitSelector : MonoBehaviour
         {
             if (selectedUnitsList.Contains(_unit))
             {
-                _unit.SetThisUnitSelected();
+                _unit.SetThisUnitSelected(true);
             }
             else
             {
-                _unit.SetThisUnitUnselected();
+                _unit.SetThisUnitSelected(false);
             }
         }
     }
@@ -152,11 +152,11 @@ public class UnitSelector : MonoBehaviour
         {
             if (selectedUnitsList.Contains(_unit))
             {
-                _unit.SetThisUnitSelected();
+                _unit.SetThisUnitSelected(true);
             }
             else
             {
-                _unit.SetThisUnitUnselected();
+                _unit.SetThisUnitSelected(false);
             }
         }
     }
@@ -169,11 +169,11 @@ public class UnitSelector : MonoBehaviour
         {
             if (selectedUnitsList.Contains(_unit))
             {
-                _unit.SetThisUnitSelected();
+                _unit.SetThisUnitSelected(true);
             }
             else
             {
-                _unit.SetThisUnitUnselected();
+                _unit.SetThisUnitSelected(false);
             }
         }
     }

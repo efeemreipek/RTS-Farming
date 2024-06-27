@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnitAnimator : MonoBehaviour
 {
     private int animIsWalkingHash;
+    private int animMineHash;
 
     private Animator _animator;
 
@@ -13,10 +14,16 @@ public class UnitAnimator : MonoBehaviour
         _animator = GetComponent<Animator>();
 
         animIsWalkingHash = Animator.StringToHash("isWalking");
+        animMineHash = Animator.StringToHash("Mine");
     }
 
-    public void SetWalking(bool cond)
+    public void SetIsWalking(bool cond)
     {
         _animator.SetBool(animIsWalkingHash, cond);
+    }
+
+    public void TriggerMine()
+    {
+        _animator.SetTrigger(animMineHash);
     }
 }

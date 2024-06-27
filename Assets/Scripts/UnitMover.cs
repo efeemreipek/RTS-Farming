@@ -43,15 +43,29 @@ public class UnitMover : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (hit.collider.CompareTag("Ground"))
+            // Right clicked resource node to gather resource
+            if (hit.collider.TryGetComponent(out ResourceNode resourceNode))
+            {
+                List<Unit> selectedUnitsList = unitSelector.GetSelectedUnitsList();
+                foreach (Unit selectedUnit in selectedUnitsList)
+                {
+                    if (selectedUnit != null)
+                    {
+                        selectedUnit.MoveTo(resourceNode.transform.position);
+                        selectedUnit.ChangeState(Unit.State.MovingToResource);
+                    }
+                }
+            }
+            // Right clicked ground to move
+            else if (hit.collider.CompareTag("Ground"))
             {
                 List<Unit> selectedUnitsList = unitSelector.GetSelectedUnitsList();
                 foreach(Unit selectedUnit in selectedUnitsList)
                 {
                     if (selectedUnit != null)
                     {
-                        NavMeshAgent unitNMA = selectedUnit.GetComponent<NavMeshAgent>();
-                        unitNMA.SetDestination(hit.point);
+                        selectedUnit.MoveTo(hit.point);
+                        selectedUnit.ChangeState(Unit.State.MovingToSomewhere);
                     }
                 }
             }
