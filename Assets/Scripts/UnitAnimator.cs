@@ -19,6 +19,7 @@ public class UnitAnimator : MonoBehaviour
 
     public void SetIsWalking(bool cond)
     {
+        if (cond == _animator.GetBool(animIsWalkingHash)) return;
         _animator.SetBool(animIsWalkingHash, cond);
     }
 

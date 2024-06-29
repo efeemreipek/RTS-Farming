@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceNode : MonoBehaviour
+public class ResourceNode : MonoBehaviour, ISelectable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject selectedQuad;
 
-    // Update is called once per frame
-    void Update()
+    private bool isThisNodeSelected = false;
+
+    public bool IsSelected(bool cond)
     {
-        
+        isThisNodeSelected = cond;
+        selectedQuad.SetActive(isThisNodeSelected);
+        return isThisNodeSelected;
     }
 }
