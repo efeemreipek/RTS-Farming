@@ -16,10 +16,12 @@ public class Unit : MonoBehaviour, ISelectable
     }
 
     [SerializeField] private GameObject selectedQuad;
-    [SerializeField] private Transform storageNode;
+    [SerializeField] private StorageNode storageNode;
 
     private UnitAnimator unitAnimator;
     private NavMeshAgent unitNMA;
+
+    private ResourceNode resourceNodeMemory;
 
     private bool isThisUnitSelected = false;
     private Vector3 targetPosition;
@@ -61,12 +63,18 @@ public class Unit : MonoBehaviour, ISelectable
                 unitAnimator.SetIsWalking(true);
                 if (CheckIfDestinationIsReached())
                 {
+                    storageNode.AddGoldToStorage(goldAmount);
                     goldAmount = 0;
+                    if (resourceNodeMemory.CanGatherResource())
+                    {
+                        MoveToGatherResource(resourceNodeMemory.transform.position, resourceNodeMemory);
+                        break;
+                    }
                     ChangeState(State.Idle);
                 }
                 break;
             case State.Gathering:
-                GatherResource();
+                GatherResource(resourceNodeMemory);
                 break;
             default:
                 break;
@@ -93,12 +101,16 @@ public class Unit : MonoBehaviour, ISelectable
         ChangeState(State.Moving);
         targetPosition = position;
         unitNMA.SetDestination(targetPosition);
+
+        //resourceNodeMemory = null;
     }
-    public void MoveToGatherResource(Vector3 position)
+    public void MoveToGatherResource(Vector3 position, ResourceNode resourceNode)
     {
         ChangeState(State.MovingToResource);
         targetPosition = position;
         unitNMA.SetDestination(targetPosition);
+
+        resourceNodeMemory = resourceNode;
     }
     public void MoveToStorage(Vector3 position)
     {
@@ -124,12 +136,16 @@ public class Unit : MonoBehaviour, ISelectable
         return false;
     }
 
-    private void GatherResource()
+    private void GatherResource(ResourceNode resourceNode)
     {
-        if(!isMining && goldAmount < inventoryCapacity)
+        if(!isMining && goldAmount < inventoryCapacity && resourceNode.CanGatherResource())
         {
             unitAnimator.TriggerMine();
             isMining = true;
+        }
+        else if(goldAmount >= inventoryCapacity || !resourceNode.CanGatherResource())
+        {
+            MoveToStorage(storageNode.transform.position);
         }
         else 
         {
@@ -140,6 +156,7 @@ public class Unit : MonoBehaviour, ISelectable
     public void OnMineAnimationEnd()
     {
         goldAmount++;
+        resourceNodeMemory.DecrementGoldAmount();  
         isMining = false;
         ChangeState(State.Gathering);
     }

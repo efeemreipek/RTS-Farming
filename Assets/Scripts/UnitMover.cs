@@ -51,7 +51,7 @@ public class UnitMover : MonoBehaviour
                 {
                     if (selectedUnit != null)
                     {
-                        selectedUnit.MoveToGatherResource(resourceNode.transform.position);
+                        selectedUnit.MoveToGatherResource(resourceNode.transform.position, resourceNode);
                     }
                 }
             }
