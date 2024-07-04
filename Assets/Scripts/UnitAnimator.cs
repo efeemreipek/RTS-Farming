@@ -8,6 +8,7 @@ public class UnitAnimator : MonoBehaviour
     private int animMineHash;
 
     private Animator _animator;
+    private AnimatorStateInfo _animatorStateInfo;
 
     private void Awake()
     {
@@ -15,6 +16,8 @@ public class UnitAnimator : MonoBehaviour
 
         animIsWalkingHash = Animator.StringToHash("isWalking");
         animMineHash = Animator.StringToHash("Mine");
+
+        _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
     }
 
     public void SetIsWalking(bool cond)
@@ -26,5 +29,10 @@ public class UnitAnimator : MonoBehaviour
     public void TriggerMine()
     {
         _animator.SetTrigger(animMineHash);
+    }
+
+    public float GetCurrentAnimationLength()
+    {
+        return _animatorStateInfo.length;
     }
 }

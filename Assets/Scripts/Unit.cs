@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,152 +11,194 @@ public class Unit : MonoBehaviour, ISelectable
         Moving,
         MovingToResource,
         MovingToStorage,
-        Gathering
+        GatheringResource
     }
 
     [SerializeField] private GameObject selectedQuad;
-    [SerializeField] private StorageNode storageNode;
 
-    private UnitAnimator unitAnimator;
-    private NavMeshAgent unitNMA;
+    private UnitAnimator _unitAnimator;
+    private NavMeshAgent _unitNMA;
+    private StorageNode _storageNode;
+    private ResourceNode _resourceNode;
+    private State _currentState;
+    private Vector3 _targetPosition;
 
-    private ResourceNode resourceNodeMemory;
-
-    private bool isThisUnitSelected = false;
-    private Vector3 targetPosition;
-    private State currentState;
-    private int goldAmount = 0;
-    private int inventoryCapacity = 3;
-    private bool isMining = false;
+    private bool _isThisUnitSelected = false;
+    private bool _isGatheringResource = false;
+    private bool _canMove = true;
+    private int _currentGoldAmount = 0;
+    private int _maxGoldAmount = 3;
 
     private void Awake()
     {
-        unitAnimator = GetComponent<UnitAnimator>();
-        unitNMA = GetComponent<NavMeshAgent>();
+        _unitAnimator = GetComponent<UnitAnimator>();
+        _unitNMA = GetComponent<NavMeshAgent>();
 
-        currentState = State.Idle;
+        _currentState = State.Idle;
     }
 
     private void Update()
     {
-        switch (currentState)
+        _unitAnimator.SetIsWalking(IsNMAMoving());
+
+        switch (_currentState)
         {
             case State.Idle:
-                unitAnimator.SetIsWalking(false);
                 break;
             case State.Moving:
-                unitAnimator.SetIsWalking(true);
                 if (CheckIfDestinationIsReached())
                 {
                     ChangeState(State.Idle);
                 }
                 break;
             case State.MovingToResource:
-                unitAnimator.SetIsWalking(true);
                 if (CheckIfDestinationIsReached())
                 {
-                    ChangeState(State.Gathering);
+                    ChangeState(State.GatheringResource);
                 }
                 break;
             case State.MovingToStorage:
-                unitAnimator.SetIsWalking(true);
                 if (CheckIfDestinationIsReached())
                 {
-                    storageNode.AddGoldToStorage(goldAmount);
-                    goldAmount = 0;
-                    if (resourceNodeMemory.CanGatherResource())
+                    StoreGoldInStorage();
+
+                    if (_resourceNode.CanGatherResource())
                     {
-                        MoveToGatherResource(resourceNodeMemory.transform.position, resourceNodeMemory);
-                        break;
+                        MoveToGatherResource(_resourceNode);
                     }
-                    ChangeState(State.Idle);
+                    else
+                    {
+                        ChangeState(State.Idle);
+                    }
                 }
                 break;
-            case State.Gathering:
-                GatherResource(resourceNodeMemory);
-                break;
-            default:
+            case State.GatheringResource:
+                StartCoroutine(GatherResource(_resourceNode));
                 break;
         }
-
     }
-    
+
     public bool IsSelected(bool cond)
     {
-        isThisUnitSelected = cond;
-        selectedQuad.SetActive(isThisUnitSelected);
-        return isThisUnitSelected;
+        _isThisUnitSelected = cond;
+        selectedQuad.SetActive(_isThisUnitSelected);
+        return _isThisUnitSelected;
     }
-    public void ChangeState(State newState)
-    {
-        if (currentState == newState) return;
-        currentState = newState;
-    }
-
-    private bool IsIdle() => unitNMA.velocity.sqrMagnitude <= 0.01f;
-
-    public void MoveTo(Vector3 position)
-    {
-        ChangeState(State.Moving);
-        targetPosition = position;
-        unitNMA.SetDestination(targetPosition);
-
-        //resourceNodeMemory = null;
-    }
-    public void MoveToGatherResource(Vector3 position, ResourceNode resourceNode)
-    {
-        ChangeState(State.MovingToResource);
-        targetPosition = position;
-        unitNMA.SetDestination(targetPosition);
-
-        resourceNodeMemory = resourceNode;
-    }
-    public void MoveToStorage(Vector3 position)
-    {
-        ChangeState(State.MovingToStorage);
-        targetPosition = position;
-        unitNMA.SetDestination(targetPosition);
-    }
-
     private bool CheckIfDestinationIsReached()
     {
-        // Check if we've reached the destination
-        if (!unitNMA.pathPending)
+        if (!_unitNMA.pathPending)
         {
-            if (unitNMA.remainingDistance <= unitNMA.stoppingDistance)
+            if (_unitNMA.remainingDistance <= _unitNMA.stoppingDistance)
             {
-                if (!unitNMA.hasPath || unitNMA.velocity.sqrMagnitude == 0f)
+                if (!_unitNMA.hasPath || _unitNMA.velocity.sqrMagnitude == 0f)
                 {
                     return true;
                 }
             }
         }
-
         return false;
     }
-
-    private void GatherResource(ResourceNode resourceNode)
+    private void ChangeState(State newState)
     {
-        if(!isMining && goldAmount < inventoryCapacity && resourceNode.CanGatherResource())
+        if (_currentState == newState) return;
+        _currentState = newState;
+    }
+    private bool IsNMAMoving()
+    {
+        return _unitNMA.velocity.sqrMagnitude > 0f;
+    }
+
+    public void MoveTo(Vector3 position)
+    {
+        if (!_canMove) return;
+
+        _targetPosition = position;
+        _unitNMA.SetDestination(_targetPosition);
+        ChangeState(State.Moving);
+
+        _resourceNode = null;
+    }
+    public void MoveToGatherResource(ResourceNode resourceNode)
+    {
+        _resourceNode = resourceNode;
+
+        _targetPosition = resourceNode.transform.position;
+        _unitNMA.SetDestination(_targetPosition);
+        ChangeState(State.MovingToResource);
+    }
+    private void MoveToStorage()
+    {
+        _storageNode = FindClosestStorageNode();
+
+        _targetPosition = _storageNode.transform.position;
+        _unitNMA.SetDestination(_targetPosition);
+        ChangeState(State.MovingToStorage);
+    }
+    private IEnumerator GatherResource(ResourceNode resourceNode)
+    {
+        if (!_isGatheringResource && _currentGoldAmount < _maxGoldAmount && resourceNode.CanGatherResource())
         {
-            unitAnimator.TriggerMine();
-            isMining = true;
+            _canMove = false;
+            _unitAnimator.TriggerMine();
+            _isGatheringResource = true;
+            yield return new WaitForSeconds(_unitAnimator.GetCurrentAnimationLength());
+            _canMove = true;
         }
-        else if(goldAmount >= inventoryCapacity || !resourceNode.CanGatherResource())
+        if (!resourceNode.CanGatherResource())
         {
-            MoveToStorage(storageNode.transform.position);
+            MoveToStorage();
         }
-        else 
+
+    }
+    private void StoreGoldInStorage()
+    {
+        _storageNode.AddGoldToStorage(_currentGoldAmount);
+        _currentGoldAmount = 0;
+    }
+    private bool CheckIfInventoryFull()
+    {
+        return _currentGoldAmount == _maxGoldAmount;
+    }
+    private StorageNode FindClosestStorageNode()
+    {
+        StorageNode closestStorageNode = null;
+        GameObject[] allNodes = GameObject.FindGameObjectsWithTag("Node");
+        List<StorageNode> storageNodes = new List<StorageNode>();
+        foreach (GameObject node in allNodes)
         {
-            ChangeState(State.Idle);
+            if (node.TryGetComponent(out StorageNode _storageNode))
+            {
+                storageNodes.Add(_storageNode);
+            }
         }
+
+        float closestDistance = float.MaxValue;
+        foreach (StorageNode storageNode in storageNodes)
+        {
+            Vector3 direction = storageNode.transform.position - transform.position;
+            float distance = direction.sqrMagnitude;
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestStorageNode = storageNode;
+            }
+        }
+
+        return closestStorageNode;
     }
 
     public void OnMineAnimationEnd()
     {
-        goldAmount++;
-        resourceNodeMemory.DecrementGoldAmount();  
-        isMining = false;
-        ChangeState(State.Gathering);
+        _currentGoldAmount++;
+        _isGatheringResource = false;
+        _resourceNode.DecrementGoldAmount();
+        if (CheckIfInventoryFull())
+        {
+            MoveToStorage();
+        }
+        else
+        {
+            ChangeState(State.GatheringResource);
+        }
     }
 }
