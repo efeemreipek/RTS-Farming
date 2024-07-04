@@ -11,8 +11,8 @@ public class NodeSelector : MonoBehaviour
 
     private Camera _camera;
 
-    private List<ResourceNode> allNodesList = new List<ResourceNode>();
-    private List<ResourceNode> selectedNodesList = new List<ResourceNode>();
+    private List<Node> allNodesList = new List<Node>();
+    private List<Node> selectedNodesList = new List<Node>();
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class NodeSelector : MonoBehaviour
         GameObject[] allNodesGO = GameObject.FindGameObjectsWithTag("Node");
         foreach (GameObject nodeGO in allNodesGO)
         {
-            allNodesList.Add(nodeGO.GetComponent<ResourceNode>());
+            allNodesList.Add(nodeGO.GetComponent<Node>());
         }
     }
 
@@ -53,15 +53,15 @@ public class NodeSelector : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (hit.collider.TryGetComponent(out ResourceNode resourceNode)) // Clicked on a resource node
+            if (hit.collider.TryGetComponent(out Node node)) // Clicked on a resource node
             {
                 if (Keyboard.current.leftShiftKey.isPressed) // Multiple resource node selection with shift
                 {
-                    SelectMultipleUnitWithShift(resourceNode);
+                    SelectMultipleUnitWithShift(node);
                 }
                 else // Single resource node selection
                 {
-                    SelectSingleUnit(resourceNode);
+                    SelectSingleUnit(node);
                 }
 
                 Debug.Log("You clicked on " + hit.collider.gameObject.name);
@@ -84,12 +84,12 @@ public class NodeSelector : MonoBehaviour
         }
     }
 
-    private void SelectSingleUnit(ResourceNode node)
+    private void SelectSingleUnit(Node node)
     {
         DeselectAllNodes();
         selectedNodesList.Add(node);
 
-        foreach (ResourceNode _node in allNodesList)
+        foreach (Node _node in allNodesList)
         {
             if (selectedNodesList.Contains(_node))
             {
@@ -102,14 +102,14 @@ public class NodeSelector : MonoBehaviour
         }
     }
 
-    private void SelectMultipleUnitWithShift(ResourceNode node)
+    private void SelectMultipleUnitWithShift(Node node)
     {
         if (!selectedNodesList.Contains(node))
         {
             selectedNodesList.Add(node);
         }
 
-        foreach (ResourceNode _node in allNodesList)
+        foreach (Node _node in allNodesList)
         {
             if (selectedNodesList.Contains(_node))
             {

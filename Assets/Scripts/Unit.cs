@@ -6,15 +6,17 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour, ISelectable
 {
-    private enum State
+    public enum State
     {
         Idle,
         Moving,
         MovingToResource,
+        MovingToStorage,
         Gathering
     }
 
     [SerializeField] private GameObject selectedQuad;
+    [SerializeField] private Transform storageNode;
 
     private UnitAnimator unitAnimator;
     private NavMeshAgent unitNMA;
@@ -23,6 +25,7 @@ public class Unit : MonoBehaviour, ISelectable
     private Vector3 targetPosition;
     private State currentState;
     private int goldAmount = 0;
+    private int inventoryCapacity = 3;
     private bool isMining = false;
 
     private void Awake()
@@ -44,14 +47,22 @@ public class Unit : MonoBehaviour, ISelectable
                 unitAnimator.SetIsWalking(true);
                 if (CheckIfDestinationIsReached())
                 {
-                    currentState = State.Idle;
+                    ChangeState(State.Idle);
                 }
                 break;
             case State.MovingToResource:
                 unitAnimator.SetIsWalking(true);
                 if (CheckIfDestinationIsReached())
                 {
-                    currentState = State.Gathering;
+                    ChangeState(State.Gathering);
+                }
+                break;
+            case State.MovingToStorage:
+                unitAnimator.SetIsWalking(true);
+                if (CheckIfDestinationIsReached())
+                {
+                    goldAmount = 0;
+                    ChangeState(State.Idle);
                 }
                 break;
             case State.Gathering:
@@ -69,19 +80,29 @@ public class Unit : MonoBehaviour, ISelectable
         selectedQuad.SetActive(isThisUnitSelected);
         return isThisUnitSelected;
     }
+    public void ChangeState(State newState)
+    {
+        if (currentState == newState) return;
+        currentState = newState;
+    }
 
     private bool IsIdle() => unitNMA.velocity.sqrMagnitude <= 0.01f;
 
     public void MoveTo(Vector3 position)
     {
-        currentState = State.Moving;
+        ChangeState(State.Moving);
         targetPosition = position;
         unitNMA.SetDestination(targetPosition);
     }
-
     public void MoveToGatherResource(Vector3 position)
     {
-        currentState = State.MovingToResource;
+        ChangeState(State.MovingToResource);
+        targetPosition = position;
+        unitNMA.SetDestination(targetPosition);
+    }
+    public void MoveToStorage(Vector3 position)
+    {
+        ChangeState(State.MovingToStorage);
         targetPosition = position;
         unitNMA.SetDestination(targetPosition);
     }
@@ -105,14 +126,14 @@ public class Unit : MonoBehaviour, ISelectable
 
     private void GatherResource()
     {
-        if(!isMining)
+        if(!isMining && goldAmount < inventoryCapacity)
         {
             unitAnimator.TriggerMine();
             isMining = true;
         }
-        else
+        else 
         {
-            currentState = State.Idle;
+            ChangeState(State.Idle);
         }
     }
 
@@ -120,5 +141,6 @@ public class Unit : MonoBehaviour, ISelectable
     {
         goldAmount++;
         isMining = false;
+        ChangeState(State.Gathering);
     }
 }

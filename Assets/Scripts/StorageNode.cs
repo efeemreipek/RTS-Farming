@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceNode : Node
+public class StorageNode : Node
 {
-
+    
 }
