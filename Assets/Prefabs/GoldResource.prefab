@@ -339,6 +339,7 @@ GameObject:
   - component: {fileID: 946624564566890833}
   - component: {fileID: 3936155641971543809}
   - component: {fileID: 3592657174054586449}
+  - component: {fileID: 95743790747900952}
   m_Layer: 0
   m_Name: GoldResource
   m_TagString: Node
@@ -398,6 +399,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedQuad: {fileID: 9206266425896208347}
+--- !u!208 &95743790747900952
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7570184992653782536}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1, y: 1, z: 1}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8474425514880276910
 GameObject:
   m_ObjectHideFlags: 0
