@@ -7,8 +7,10 @@ public class ResourceNode : Node
     private int maxGoldAmount = 5;
     private int currentGoldAmount;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         currentGoldAmount = maxGoldAmount;
     }
 

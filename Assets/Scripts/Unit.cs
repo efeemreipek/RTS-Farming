@@ -121,16 +121,16 @@ public class Unit : MonoBehaviour, ISelectable
     public void MoveToGatherResource(ResourceNode resourceNode)
     {
         _resourceNode = resourceNode;
+        _targetPosition = FindClosestNodeMovePoint(_resourceNode);
 
-        _targetPosition = resourceNode.transform.position;
         _unitNMA.SetDestination(_targetPosition);
         ChangeState(State.MovingToResource);
     }
     private void MoveToStorage()
     {
         _storageNode = FindClosestStorageNode();
+        _targetPosition = FindClosestNodeMovePoint(_storageNode);
 
-        _targetPosition = _storageNode.transform.position;
         _unitNMA.SetDestination(_targetPosition);
         ChangeState(State.MovingToStorage);
     }
@@ -185,6 +185,23 @@ public class Unit : MonoBehaviour, ISelectable
         }
 
         return closestStorageNode;
+    }
+    private Vector3 FindClosestNodeMovePoint(Node node)
+    {
+        Vector3 closestMovePoint = Vector3.zero;
+        float closestDistance = float.MaxValue;
+        foreach (Vector3 movePoint in node.GetMovePointList())
+        {
+            Vector3 direction = movePoint - transform.position;
+            float distance = direction.sqrMagnitude;
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestMovePoint = movePoint;
+            }
+        }
+
+        return closestMovePoint;
     }
 
     public void OnMineAnimationEnd()
