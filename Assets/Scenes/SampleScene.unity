@@ -1737,6 +1737,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: StorageNode
       objectReference: {fileID: 0}
+    - target: {fileID: 8231480677465576213, guid: ced5c103294ff344194973890c80a7ba,
+        type: 3}
+      propertyPath: m_Carve
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8231480677465576213, guid: ced5c103294ff344194973890c80a7ba,
+        type: 3}
+      propertyPath: m_Shape
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8231480677465576213, guid: ced5c103294ff344194973890c80a7ba,
+        type: 3}
+      propertyPath: m_Extents.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8231480677465576213, guid: ced5c103294ff344194973890c80a7ba,
+        type: 3}
+      propertyPath: m_Extents.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8231480677465576213, guid: ced5c103294ff344194973890c80a7ba,
+        type: 3}
+      propertyPath: m_Extents.z
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

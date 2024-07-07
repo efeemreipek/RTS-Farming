@@ -54,6 +54,7 @@ public class Unit : MonoBehaviour, ISelectable
             case State.MovingToResource:
                 if (CheckIfDestinationIsReached())
                 {
+                    RotateTowardsResource();
                     ChangeState(State.GatheringResource);
                 }
                 break;
@@ -73,6 +74,7 @@ public class Unit : MonoBehaviour, ISelectable
                 }
                 break;
             case State.GatheringResource:
+                RotateTowardsResource();
                 StartCoroutine(GatherResource(_resourceNode));
                 break;
         }
@@ -202,6 +204,16 @@ public class Unit : MonoBehaviour, ISelectable
         }
 
         return closestMovePoint;
+    }
+    private void RotateTowardsResource()
+    {
+        if (_resourceNode == null) return;
+
+        Vector3 direction = (_resourceNode.transform.position - transform.position).normalized;
+        direction.y = 0; // Keep the rotation on the horizontal plane
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * _unitNMA.angularSpeed);
     }
 
     public void OnMineAnimationEnd()
