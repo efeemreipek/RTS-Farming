@@ -62,6 +62,7 @@ public class NodeSelector : MonoBehaviour
                 else // Single resource node selection
                 {
                     SelectSingleUnit(node);
+                    UIManager.Instance.InitializeNodeInfoPanel(node);
                 }
 
                 Debug.Log("You clicked on " + hit.collider.gameObject.name);
@@ -69,6 +70,7 @@ public class NodeSelector : MonoBehaviour
             else // Clicked on something else. So deselect all resource nodes
             {
                 DeselectAllNodes();
+                UIManager.Instance.SetActiveNodeInfoPanel(false);
             }
         }
 

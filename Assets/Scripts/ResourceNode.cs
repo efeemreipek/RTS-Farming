@@ -19,4 +19,6 @@ public class ResourceNode : Node
         currentGoldAmount = Mathf.Max(currentGoldAmount - 1, 0);
     }
     public bool CanGatherResource() => currentGoldAmount > 0;
+    public int GetMaxGoldAmount() => maxGoldAmount;
+    public int GetCurrentGoldAmount() => currentGoldAmount;
 }

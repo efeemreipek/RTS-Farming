@@ -4,10 +4,11 @@ using UnityEngine;
 
 public abstract class Node : MonoBehaviour, ISelectable
 {
-    [SerializeField] private GameObject selectedQuad;
+    [SerializeField] protected GameObject selectedQuad;
+    [SerializeField] protected string nodeName;
 
-    private bool isThisNodeSelected = false;
-    private List<Vector3> movePointList = new List<Vector3>();
+    protected bool isThisNodeSelected = false;
+    protected List<Vector3> movePointList = new List<Vector3>();
 
     protected virtual void Start()
     {
@@ -25,4 +26,5 @@ public abstract class Node : MonoBehaviour, ISelectable
         return isThisNodeSelected;
     }
     public List<Vector3> GetMovePointList() => movePointList;
+    public string GetNodeName() => nodeName;    
 }
