@@ -26,8 +26,8 @@ public class Unit : MonoBehaviour, ISelectable
     private bool _isThisUnitSelected = false;
     private bool _isGatheringResource = false;
     private bool _canMove = true;
-    private int _currentGoldAmount = 0;
-    private int _maxGoldAmount = 3;
+    private int _currentResourceAmount = 0;
+    private int _maxResourceAmount = 3;
 
     private void Awake()
     {
@@ -61,7 +61,7 @@ public class Unit : MonoBehaviour, ISelectable
             case State.MovingToStorage:
                 if (CheckIfDestinationIsReached())
                 {
-                    StoreGoldInStorage();
+                    StoreResourceInStorage();
 
                     if (_resourceNode.CanGatherResource())
                     {
@@ -138,10 +138,17 @@ public class Unit : MonoBehaviour, ISelectable
     }
     private IEnumerator GatherResource(ResourceNode resourceNode)
     {
-        if (!_isGatheringResource && _currentGoldAmount < _maxGoldAmount && resourceNode.CanGatherResource())
+        if (!_isGatheringResource && _currentResourceAmount < _maxResourceAmount && resourceNode.CanGatherResource())
         {
             _canMove = false;
-            _unitAnimator.TriggerMine();
+            if(resourceNode is GoldResourceNode)
+            {
+                _unitAnimator.TriggerMine();
+            }
+            else if(resourceNode is WoodResourceNode)
+            {
+                _unitAnimator.TriggerCut();
+            }
             _isGatheringResource = true;
             yield return new WaitForSeconds(_unitAnimator.GetCurrentAnimationLength());
             _canMove = true;
@@ -152,14 +159,14 @@ public class Unit : MonoBehaviour, ISelectable
         }
 
     }
-    private void StoreGoldInStorage()
+    private void StoreResourceInStorage()
     {
-        _storageNode.AddGoldToStorage(_currentGoldAmount);
-        _currentGoldAmount = 0;
+        //_storageNode.AddResourceToStorage(_currentResourceAmount);
+        _currentResourceAmount = 0;
     }
     private bool CheckIfInventoryFull()
     {
-        return _currentGoldAmount == _maxGoldAmount;
+        return _currentResourceAmount == _maxResourceAmount;
     }
     private StorageNode FindClosestStorageNode()
     {
@@ -216,11 +223,11 @@ public class Unit : MonoBehaviour, ISelectable
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * _unitNMA.angularSpeed);
     }
 
-    public void OnMineAnimationEnd()
+    public void OnAnimationEnd()
     {
-        _currentGoldAmount++;
+        _currentResourceAmount++;
         _isGatheringResource = false;
-        _resourceNode.DecrementGoldAmount();
+        _resourceNode.DecrementResourceAmount();
         if (CheckIfInventoryFull())
         {
             MoveToStorage();

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Villager@Pickaxe-Mining01
+  m_Name: Mining
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -56348,7 +56348,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Dummy/B-hips/B-spine/B-chest/B-upperChest/B-shoulder_R/B-upper_arm_R/B-forearm_R/VillagerPickaxe
+    path: Dummy/B-hips/B-spine/B-chest/B-upperChest/B-shoulder_R/B-upper_arm_R/B-forearm_R/B-hand_R/VillagerPickaxe
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -56361,7 +56361,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 449998324
+      path: 4082810679
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -115484,7 +115484,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Dummy/B-hips/B-spine/B-chest/B-upperChest/B-shoulder_R/B-upper_arm_R/B-forearm_R/VillagerPickaxe
+    path: Dummy/B-hips/B-spine/B-chest/B-upperChest/B-shoulder_R/B-upper_arm_R/B-forearm_R/B-hand_R/VillagerPickaxe
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -115943,7 +115943,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.6333333
-    functionName: OnMineAnimationEnd
+    functionName: OnAnimationEnd
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

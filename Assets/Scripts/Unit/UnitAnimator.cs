@@ -6,6 +6,7 @@ public class UnitAnimator : MonoBehaviour
 {
     private int animIsWalkingHash;
     private int animMineHash;
+    private int animCutHash;
 
     private Animator _animator;
     private AnimatorStateInfo _animatorStateInfo;
@@ -16,6 +17,7 @@ public class UnitAnimator : MonoBehaviour
 
         animIsWalkingHash = Animator.StringToHash("isWalking");
         animMineHash = Animator.StringToHash("Mine");
+        animCutHash = Animator.StringToHash("Cut");
 
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
     }
@@ -29,6 +31,10 @@ public class UnitAnimator : MonoBehaviour
     public void TriggerMine()
     {
         _animator.SetTrigger(animMineHash);
+    }
+    public void TriggerCut()
+    {
+        _animator.SetTrigger(animCutHash);
     }
 
     public float GetCurrentAnimationLength()
