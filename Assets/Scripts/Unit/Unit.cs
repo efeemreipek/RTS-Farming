@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,14 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour, ISelectable
 {
+    public static Action OnResourceGathered;
+
     public enum State
     {
         Idle,
         Moving,
         MovingToResource,
-        MovingToStorage,
+        MovingToFoodHouse,
         GatheringResource
     }
 
@@ -18,21 +21,25 @@ public class Unit : MonoBehaviour, ISelectable
 
     private UnitAnimator _unitAnimator;
     private NavMeshAgent _unitNMA;
-    private StorageNode _storageNode;
     private ResourceNode _resourceNode;
+    private FoodHouseNode _foodHouseNode;
     private State _currentState;
     private Vector3 _targetPosition;
 
     private bool _isThisUnitSelected = false;
     private bool _isGatheringResource = false;
     private bool _canMove = true;
-    private int _currentResourceAmount = 0;
-    private int _maxResourceAmount = 3;
+    //private int _currentResourceAmount = 0;
+    //private int _maxResourceAmount = 3;
+    private int _currentEnergy = 0;
+    private int _maxEnergy = 5;
 
     private void Awake()
     {
         _unitAnimator = GetComponent<UnitAnimator>();
         _unitNMA = GetComponent<NavMeshAgent>();
+
+        SetEnergyToMax();
 
         _currentState = State.Idle;
     }
@@ -58,19 +65,10 @@ public class Unit : MonoBehaviour, ISelectable
                     ChangeState(State.GatheringResource);
                 }
                 break;
-            case State.MovingToStorage:
+            case State.MovingToFoodHouse:
                 if (CheckIfDestinationIsReached())
                 {
-                    StoreResourceInStorage();
-
-                    if (_resourceNode.CanGatherResource())
-                    {
-                        MoveToGatherResource(_resourceNode);
-                    }
-                    else
-                    {
-                        ChangeState(State.Idle);
-                    }
+                    StartCoroutine(RestoreEnergy());
                 }
                 break;
             case State.GatheringResource:
@@ -109,6 +107,10 @@ public class Unit : MonoBehaviour, ISelectable
     {
         return _unitNMA.velocity.sqrMagnitude > 0f;
     }
+    private void SetEnergyToMax()
+    {
+        _currentEnergy = _maxEnergy;
+    }
 
     public void MoveTo(Vector3 position)
     {
@@ -128,17 +130,17 @@ public class Unit : MonoBehaviour, ISelectable
         _unitNMA.SetDestination(_targetPosition);
         ChangeState(State.MovingToResource);
     }
-    private void MoveToStorage()
+    private void MoveToFoodHouse()
     {
-        _storageNode = FindClosestStorageNode();
-        _targetPosition = FindClosestNodeMovePoint(_storageNode);
+        _foodHouseNode = FindClosesetFoodHouseNode();
+        _targetPosition = FindClosestNodeMovePoint(_foodHouseNode);
 
         _unitNMA.SetDestination(_targetPosition);
-        ChangeState(State.MovingToStorage);
+        ChangeState(State.MovingToFoodHouse);
     }
     private IEnumerator GatherResource(ResourceNode resourceNode)
     {
-        if (!_isGatheringResource && _currentResourceAmount < _maxResourceAmount && resourceNode.CanGatherResource())
+        if (!_isGatheringResource && /*_currentResourceAmount < _maxResourceAmount &&*/ _currentEnergy > 0 && resourceNode.CanGatherResource())
         {
             _canMove = false;
             if(resourceNode is GoldResourceNode)
@@ -155,45 +157,35 @@ public class Unit : MonoBehaviour, ISelectable
         }
         if (!resourceNode.CanGatherResource())
         {
-            MoveToStorage();
+            MoveToFoodHouse();
         }
-
     }
-    private void StoreResourceInStorage()
+    private FoodHouseNode FindClosesetFoodHouseNode()
     {
-        //_storageNode.AddResourceToStorage(_currentResourceAmount);
-        _currentResourceAmount = 0;
-    }
-    private bool CheckIfInventoryFull()
-    {
-        return _currentResourceAmount == _maxResourceAmount;
-    }
-    private StorageNode FindClosestStorageNode()
-    {
-        StorageNode closestStorageNode = null;
+        FoodHouseNode closestFoodHouseNode = null;
         GameObject[] allNodes = GameObject.FindGameObjectsWithTag("Node");
-        List<StorageNode> storageNodes = new List<StorageNode>();
+        List<FoodHouseNode> foodHouseNodes = new List<FoodHouseNode>();
         foreach (GameObject node in allNodes)
         {
-            if (node.TryGetComponent(out StorageNode _storageNode))
+            if (node.TryGetComponent(out FoodHouseNode _foodHouseNode))
             {
-                storageNodes.Add(_storageNode);
+                foodHouseNodes.Add(_foodHouseNode);
             }
         }
 
         float closestDistance = float.MaxValue;
-        foreach (StorageNode storageNode in storageNodes)
+        foreach (FoodHouseNode foodHouseNode in foodHouseNodes)
         {
-            Vector3 direction = storageNode.transform.position - transform.position;
+            Vector3 direction = foodHouseNode.transform.position - transform.position;
             float distance = direction.sqrMagnitude;
             if (distance < closestDistance)
             {
                 closestDistance = distance;
-                closestStorageNode = storageNode;
+                closestFoodHouseNode = foodHouseNode;
             }
         }
 
-        return closestStorageNode;
+        return closestFoodHouseNode;
     }
     private Vector3 FindClosestNodeMovePoint(Node node)
     {
@@ -222,15 +214,38 @@ public class Unit : MonoBehaviour, ISelectable
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * _unitNMA.angularSpeed);
     }
+    private IEnumerator RestoreEnergy()
+    {
+        ChangeState(State.Idle);
+
+        while(_currentEnergy < _maxEnergy)
+        {
+            yield return new WaitForSeconds(1f);
+            _currentEnergy++;
+            print("++");
+        }
+
+        yield return null;
+
+        if (_resourceNode.CanGatherResource())
+        {
+            MoveToGatherResource(_resourceNode);
+        }
+        else
+        {
+            ChangeState(State.Idle);
+        }
+    }
 
     public void OnAnimationEnd()
     {
-        _currentResourceAmount++;
         _isGatheringResource = false;
         _resourceNode.DecrementResourceAmount();
-        if (CheckIfInventoryFull())
+        OnResourceGathered?.Invoke();
+        _currentEnergy = Mathf.Max(_currentEnergy - 1, 0);
+        if(_currentEnergy <= 0)
         {
-            MoveToStorage();
+            MoveToFoodHouse();
         }
         else
         {

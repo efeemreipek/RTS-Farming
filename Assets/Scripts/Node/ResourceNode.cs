@@ -8,7 +8,7 @@ public class ResourceNode : Node
     public static event Action<ResourceData> OnResourceGathered;
     public ResourceData ResourceData;
 
-    private int _maxResourceAmount = 5;
+    private int _maxResourceAmount = 6;
     private int _currentResourceAmount;
     private int _regenerationTime = 15;
 

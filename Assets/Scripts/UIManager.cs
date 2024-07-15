@@ -15,22 +15,18 @@ public class UIManager : MonoBehaviour
 
     [Header("Resources")]
     [SerializeField] private TextMeshProUGUI goldAmountText;
+    [SerializeField] private TextMeshProUGUI woodAmountText;
     [Header("Node Info Panel")]
     [SerializeField] private GameObject nodeInfoPanel;
     [SerializeField] private TextMeshProUGUI nodeNameText;
     // IF NODE IS RESOURCE NODE
     [SerializeField] private TextMeshProUGUI currentAmountText;
     [SerializeField] private TextMeshProUGUI maxAmountText;
-    //IF NODE IS STORAGE NODE
-    [SerializeField] private TextMeshProUGUI goldResourceAmountText;
-    [SerializeField] private TextMeshProUGUI woodResourceAmountText;
+
 
 
     public TextMeshProUGUI GetGoldAmountText() => goldAmountText;
-    public void UpdateGoldAmountText(string text)
-    {
-        goldAmountText.text = text;
-    }
+    public TextMeshProUGUI GetWoodAmountText() => woodAmountText;
     public GameObject GetNodeInfoPanel() => nodeInfoPanel;
     public void SetActiveNodeInfoPanel(bool cond) => nodeInfoPanel.SetActive(cond);
     public TextMeshProUGUI GetNodeNameText() => nodeNameText;
@@ -42,19 +38,16 @@ public class UIManager : MonoBehaviour
         if(node is ResourceNode)
         {
             ResourceNode resourceNode = (ResourceNode)node;
-            currentAmountText.text = "Current: " + resourceNode.GetCurrentResourceAmount().ToString();
-            maxAmountText.text = "Max: " + resourceNode.GetMaxResourceAmount().ToString();
-            goldResourceAmountText.text = "";
-            woodResourceAmountText.text = "";
+            currentAmountText.text = "CURRENT: " + resourceNode.GetCurrentResourceAmount().ToString();
+            maxAmountText.text = "MAX: " + resourceNode.GetMaxResourceAmount().ToString();
+
         }
-        else if(node is StorageNode)
+        else if(node is FoodHouseNode)
         {
-            StorageNode storageNode = (StorageNode)node;
+            FoodHouseNode foodHouseNode = (FoodHouseNode)node;
             currentAmountText.text = "";
             maxAmountText.text = "";
-            goldResourceAmountText.text = "Gold: " + Inventory.Instance.GetResourceStackSize(GameAssets.Instance.goldResourceData);
-            woodResourceAmountText.text = "Wood: " + Inventory.Instance.GetResourceStackSize(GameAssets.Instance.woodResourceData);
         }
-        nodeInfoPanel.SetActive(true);
+        SetActiveNodeInfoPanel(true);
     }
 }
