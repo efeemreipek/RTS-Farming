@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class GoldResourceNode : ResourceNode
 {
+    private Transform visualTransform;
+    private List<MeshRenderer> visualMeshRendererList;
 
-    private void Update()
+    protected override void Start()
     {
-        if (!CanGatherResource())
-        {
-            ChangeMaterialOfVisual();
-        }
-    }
+        base.Start();
 
-    private void ChangeMaterialOfVisual()
-    {
-        Transform visualTransform = transform.GetChild(1);
-        List<MeshRenderer> visualMeshRendererList = new List<MeshRenderer>();
+        visualTransform = transform.GetChild(1);
+        visualMeshRendererList = new List<MeshRenderer>();
         for (int i = 0; i < visualTransform.childCount; i++)
         {
             visualMeshRendererList.Add(visualTransform.GetChild(i).GetComponent<MeshRenderer>());
         }
+    }
 
+    private void Update()
+    {
+        ChangeMaterialOfVisual();
+    }
+
+    private void ChangeMaterialOfVisual()
+    {
         if (!CanGatherResource())
         {
             foreach (MeshRenderer renderer in visualMeshRendererList)

@@ -151,6 +151,10 @@ public class Unit : MonoBehaviour, ISelectable
             {
                 _unitAnimator.TriggerCut();
             }
+            else if(resourceNode is FishResourceNode)
+            {
+                _unitAnimator.TriggerFish();
+            }
             _isGatheringResource = true;
             yield return new WaitForSeconds(_unitAnimator.GetCurrentAnimationLength());
             _canMove = true;

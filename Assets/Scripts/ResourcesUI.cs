@@ -10,6 +10,7 @@ public class ResourcesUI : MonoBehaviour
     {
         UIManager.Instance.GetGoldAmountText().text = "GOLD: 0";
         UIManager.Instance.GetWoodAmountText().text = "WOOD: 0";
+        UIManager.Instance.GetFoodAmountText().text = "FOOD: 0";
     }
     private void OnEnable()
     {
@@ -24,5 +25,6 @@ public class ResourcesUI : MonoBehaviour
     {
         UIManager.Instance.GetGoldAmountText().text = "GOLD: " + Inventory.Instance.GetResourceStackSize(GameAssets.Instance.goldResourceData);
         UIManager.Instance.GetWoodAmountText().text = "WOOD: " + Inventory.Instance.GetResourceStackSize(GameAssets.Instance.woodResourceData);
+        UIManager.Instance.GetFoodAmountText().text = "FOOD: " + Inventory.Instance.GetResourceStackSize(GameAssets.Instance.foodResourceData);
     }
 }

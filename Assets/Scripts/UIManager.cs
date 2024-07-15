@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     [Header("Resources")]
     [SerializeField] private TextMeshProUGUI goldAmountText;
     [SerializeField] private TextMeshProUGUI woodAmountText;
+    [SerializeField] private TextMeshProUGUI foodAmountText;
     [Header("Node Info Panel")]
     [SerializeField] private GameObject nodeInfoPanel;
     [SerializeField] private TextMeshProUGUI nodeNameText;
@@ -27,6 +28,7 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI GetGoldAmountText() => goldAmountText;
     public TextMeshProUGUI GetWoodAmountText() => woodAmountText;
+    public TextMeshProUGUI GetFoodAmountText() => foodAmountText;
     public GameObject GetNodeInfoPanel() => nodeInfoPanel;
     public void SetActiveNodeInfoPanel(bool cond) => nodeInfoPanel.SetActive(cond);
     public TextMeshProUGUI GetNodeNameText() => nodeNameText;

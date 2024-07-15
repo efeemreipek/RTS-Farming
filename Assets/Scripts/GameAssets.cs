@@ -15,4 +15,5 @@ public class GameAssets : MonoBehaviour
     public Material goldEmptyMaterial;
     public ResourceData goldResourceData;
     public ResourceData woodResourceData;
+    public ResourceData foodResourceData;
 }
