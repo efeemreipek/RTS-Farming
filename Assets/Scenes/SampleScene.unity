@@ -594,7 +594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a5516589365cd43a0958d2e5382db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldAmountText: {fileID: 1397795138}
+  stoneAmountText: {fileID: 1397795138}
   woodAmountText: {fileID: 803541951}
   foodAmountText: {fileID: 808280957}
   nodeInfoPanel: {fileID: 2124702524}
@@ -1682,7 +1682,7 @@ PrefabInstance:
     - target: {fileID: 7570184992653782536, guid: 0a24916e3bc96024abb620c12b577aaa,
         type: 3}
       propertyPath: m_Name
-      value: GoldResource
+      value: StoneResource
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1801,9 +1801,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58959c2fd6d09d94b8c20a68bb0e1574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldMaterial: {fileID: 2100000, guid: dbc68e8ddd4c04345ace86d8a7a2e801, type: 2}
-  goldEmptyMaterial: {fileID: 2100000, guid: 90ede4c70e90c3044b6dca9229cb7862, type: 2}
-  goldResourceData: {fileID: 11400000, guid: 1d9640c3427dc224a9c5e4087756c2b7, type: 2}
+  stoneMaterial: {fileID: 2100000, guid: ede62378fa1de4e4b887a7cafb34d85a, type: 2}
+  stoneEmptyMaterial: {fileID: 2100000, guid: 2b92260360105754f876b10976b4b7dd, type: 2}
+  stoneResourceData: {fileID: 11400000, guid: 1d9640c3427dc224a9c5e4087756c2b7, type: 2}
   woodResourceData: {fileID: 11400000, guid: 6766a054f7c253347b9dd746fb3ee0f3, type: 2}
   foodResourceData: {fileID: 11400000, guid: ac557682d658d5e4797f7229acb88ebd, type: 2}
 --- !u!1 &1216075985
@@ -2257,7 +2257,7 @@ GameObject:
   - component: {fileID: 1397795139}
   - component: {fileID: 1397795138}
   m_Layer: 5
-  m_Name: GoldAmountText
+  m_Name: StoneAmountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

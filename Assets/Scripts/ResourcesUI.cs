@@ -8,7 +8,7 @@ public class ResourcesUI : MonoBehaviour
 
     private void Start()
     {
-        UIManager.Instance.GetGoldAmountText().text = "GOLD: 0";
+        UIManager.Instance.GetStoneAmountText().text = "STONE: 0";
         UIManager.Instance.GetWoodAmountText().text = "WOOD: 0";
         UIManager.Instance.GetFoodAmountText().text = "FOOD: 0";
     }
@@ -23,7 +23,7 @@ public class ResourcesUI : MonoBehaviour
 
     private void Unit_OnResourceGathered()
     {
-        UIManager.Instance.GetGoldAmountText().text = "GOLD: " + Inventory.Instance.GetResourceStackSize(GameAssets.Instance.goldResourceData);
+        UIManager.Instance.GetStoneAmountText().text = "STONE: " + Inventory.Instance.GetResourceStackSize(GameAssets.Instance.stoneResourceData);
         UIManager.Instance.GetWoodAmountText().text = "WOOD: " + Inventory.Instance.GetResourceStackSize(GameAssets.Instance.woodResourceData);
         UIManager.Instance.GetFoodAmountText().text = "FOOD: " + Inventory.Instance.GetResourceStackSize(GameAssets.Instance.foodResourceData);
     }

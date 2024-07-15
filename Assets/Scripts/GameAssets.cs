@@ -11,9 +11,9 @@ public class GameAssets : MonoBehaviour
         Instance = this;
     }
 
-    public Material goldMaterial;
-    public Material goldEmptyMaterial;
-    public ResourceData goldResourceData;
+    public Material stoneMaterial;
+    public Material stoneEmptyMaterial;
+    public ResourceData stoneResourceData;
     public ResourceData woodResourceData;
     public ResourceData foodResourceData;
 }

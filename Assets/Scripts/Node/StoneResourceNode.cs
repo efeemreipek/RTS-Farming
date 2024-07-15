@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoldResourceNode : ResourceNode
+public class StoneResourceNode : ResourceNode
 {
     private Transform visualTransform;
     private List<MeshRenderer> visualMeshRendererList;
@@ -30,14 +30,14 @@ public class GoldResourceNode : ResourceNode
         {
             foreach (MeshRenderer renderer in visualMeshRendererList)
             {
-                renderer.material = GameAssets.Instance.goldEmptyMaterial;
+                renderer.material = GameAssets.Instance.stoneEmptyMaterial;
             }
         }
         else
         {
             foreach (MeshRenderer renderer in visualMeshRendererList)
             {
-                renderer.material = GameAssets.Instance.goldMaterial;
+                renderer.material = GameAssets.Instance.stoneMaterial;
             }
         }
     }

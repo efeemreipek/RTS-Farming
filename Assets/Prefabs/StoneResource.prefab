@@ -95,7 +95,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dbc68e8ddd4c04345ace86d8a7a2e801, type: 2}
+  - {fileID: 2100000, guid: ede62378fa1de4e4b887a7cafb34d85a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -306,7 +306,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dbc68e8ddd4c04345ace86d8a7a2e801, type: 2}
+  - {fileID: 2100000, guid: ede62378fa1de4e4b887a7cafb34d85a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 4855303166042117631}
   - component: {fileID: -2453206063201814313}
   m_Layer: 0
-  m_Name: GoldResource
+  m_Name: StoneResource
   m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedQuad: {fileID: 9206266425896208347}
-  nodeName: gold node
+  nodeName: stone node
   ResourceData: {fileID: 11400000, guid: 1d9640c3427dc224a9c5e4087756c2b7, type: 2}
 --- !u!208 &-2453206063201814313
 NavMeshObstacle:
@@ -478,7 +478,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dbc68e8ddd4c04345ace86d8a7a2e801, type: 2}
+  - {fileID: 2100000, guid: ede62378fa1de4e4b887a7cafb34d85a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

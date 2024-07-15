@@ -143,7 +143,7 @@ public class Unit : MonoBehaviour, ISelectable
         if (!_isGatheringResource && /*_currentResourceAmount < _maxResourceAmount &&*/ _currentEnergy > 0 && resourceNode.CanGatherResource())
         {
             _canMove = false;
-            if(resourceNode is GoldResourceNode)
+            if(resourceNode is StoneResourceNode)
             {
                 _unitAnimator.TriggerMine();
             }
