@@ -14,6 +14,8 @@ public class NodeSelector : MonoBehaviour
     private List<Node> allNodesList = new List<Node>();
     private List<Node> selectedNodesList = new List<Node>();
 
+    private bool isPointerOverGameObject = false;
+
     private void Awake()
     {
         gameControlActions = new GameControlActions();
@@ -44,6 +46,11 @@ public class NodeSelector : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        isPointerOverGameObject = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+    }
+
     private Vector2 GetMousePosition() => mousePosition.ReadValue<Vector2>();
 
     private void MouseLeftClick_Performed(InputAction.CallbackContext inputValue)
@@ -51,7 +58,7 @@ public class NodeSelector : MonoBehaviour
         Ray ray = _camera.ScreenPointToRay(GetMousePosition());
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity) && !isPointerOverGameObject)
         {
             if (hit.collider.TryGetComponent(out Node node)) // Clicked on a resource node
             {

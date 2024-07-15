@@ -39,6 +39,8 @@ public class UnitSelector : MonoBehaviour
         mouseLeftClick.performed += MouseLeftClick_Performed;
         mouseLeftClick.canceled += MouseLeftClick_Canceled;
         gameControlActions.Enable();
+
+        MainBuildingNode.OnUnitSpawned += MainBuildingNode_OnUnitSpawned;
     }
 
     private void Start()
@@ -56,6 +58,8 @@ public class UnitSelector : MonoBehaviour
         mouseLeftClick.performed -= MouseLeftClick_Performed;
         mouseLeftClick.canceled -= MouseLeftClick_Canceled;
         gameControlActions.Disable();
+
+        MainBuildingNode.OnUnitSpawned -= MainBuildingNode_OnUnitSpawned;
     }
 
     private void Update()
@@ -66,6 +70,11 @@ public class UnitSelector : MonoBehaviour
             DrawVisual();
             DrawSelection();
         }
+    }
+
+    public void MainBuildingNode_OnUnitSpawned(Unit unit)
+    {
+        allUnitsList.Add(unit);
     }
 
     private Vector2 GetMousePosition() => mousePosition.ReadValue<Vector2>();
