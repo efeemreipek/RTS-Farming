@@ -140,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 844929339844218064}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 2.5}
+  m_LocalPosition: {x: 0, y: -2, z: 3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -340,3 +340,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedQuad: {fileID: 4054499012882060556}
   nodeName: main building
+  unitPrefab: {fileID: 0}

@@ -8,9 +8,9 @@ public class ResourceNode : Node
     public static event Action<ResourceData> OnResourceGathered;
     public ResourceData ResourceData;
 
-    private int _maxResourceAmount = 6;
+    [SerializeField] private int _maxResourceAmount = 6;
+    [SerializeField] private int _regenerationTime = 15;
     private int _currentResourceAmount;
-    private int _regenerationTime = 15;
 
     protected override void Start()
     {

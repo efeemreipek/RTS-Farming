@@ -62,4 +62,11 @@ public class Inventory : MonoBehaviour
         return 0;
     }
 
+    public void RemoveAmount(ResourceData itemData, int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            Remove(itemData);
+        }
+    }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI maxAmountText;
     // IF NODE IS MAIN BUILDING
     [SerializeField] private GameObject spawnUnitButtonGO;
+    [SerializeField] private Image unitSpawnTimerImage;
 
 
 
@@ -36,7 +38,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI GetNodeNameText() => nodeNameText;
     public TextMeshProUGUI GetCurrentAmountText() => currentAmountText;
     public TextMeshProUGUI GetMaxAmountText() => maxAmountText;
-    public GameObject GetCurrentSpawnUnitButtonGO() => spawnUnitButtonGO;
+    public GameObject GetSpawnUnitButtonGO() => spawnUnitButtonGO;
+    public Image GetUnitSpawnTimerImage() => unitSpawnTimerImage;
     public void InitializeNodeInfoPanel(Node node)
     {
         nodeNameText.text = node.GetNodeName().ToUpperInvariant();

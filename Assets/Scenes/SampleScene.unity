@@ -358,16 +358,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 467990926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &97247930 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7715129568457682894, guid: cd2fc0952370d8a47b3b5e6c15cc75f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 336198561}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &155356399 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4106790686667706857, guid: cd2fc0952370d8a47b3b5e6c15cc75f4,
     type: 3}
   m_PrefabInstance: {fileID: 336198561}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 97247930}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37977e7bff9f1c642b703c65bee9212d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &155356403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97247930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d022290eb5164c64d839a008b59c9429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &170059308
@@ -428,6 +446,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7cadf42de56284285ca08cde3a08bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &222727221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 222727222}
+  - component: {fileID: 222727224}
+  - component: {fileID: 222727223}
+  m_Layer: 5
+  m_Name: UnitSpawnTimerImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &222727222
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222727221}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 875097696}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 20}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &222727223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222727221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.39215687, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: a49ee0f19d2bec54f8d6ac4dacf91f6f, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &222727224
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222727221}
+  m_CullTransparentMesh: 1
 --- !u!1 &266167803
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +715,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4106790686667706857, guid: cd2fc0952370d8a47b3b5e6c15cc75f4,
         type: 3}
+      propertyPath: unitCost
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106790686667706857, guid: cd2fc0952370d8a47b3b5e6c15cc75f4,
+        type: 3}
       propertyPath: unitPrefab
       value: 
       objectReference: {fileID: 4781727026899271866, guid: cb40173dfb33dc64182a5b2f055df228,
@@ -634,7 +732,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7715129568457682894, guid: cd2fc0952370d8a47b3b5e6c15cc75f4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 155356403}
   m_SourcePrefab: {fileID: 100100000, guid: cd2fc0952370d8a47b3b5e6c15cc75f4, type: 3}
 --- !u!1 &361248139
 GameObject:
@@ -688,6 +790,7 @@ MonoBehaviour:
   currentAmountText: {fileID: 373871399}
   maxAmountText: {fileID: 1294301329}
   spawnUnitButtonGO: {fileID: 875097695}
+  unitSpawnTimerImage: {fileID: 222727223}
 --- !u!1 &373871397
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,6 +1706,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 266167804}
+  - {fileID: 222727222}
   m_Father: {fileID: 2124702525}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -1629,7 +1733,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1649,7 +1753,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 875097698}
   m_OnClick:
     m_PersistentCalls:
@@ -2271,6 +2375,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 397492019554863060, guid: 54535086c8b5e2a408c2cae0bb3a7e77,
+        type: 3}
+      propertyPath: _maxResourceAmount
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 946624564566890833, guid: 54535086c8b5e2a408c2cae0bb3a7e77,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2388,7 +2497,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'GOLD: 999'
+  m_text: 'STONE: 999'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
