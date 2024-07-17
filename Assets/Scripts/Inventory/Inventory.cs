@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public static Inventory Instance { get; private set; }
+    public static Action OnResourceAmountChanged;
 
     public List<InventoryItem> InventoryItemList = new List<InventoryItem>();
 
@@ -29,6 +31,7 @@ public class Inventory : MonoBehaviour
         if (itemDictionary.TryGetValue(itemData, out InventoryItem item))
         {
             item.AddToStack();
+            OnResourceAmountChanged?.Invoke();
             Debug.Log($"{item.ResourceData.DisplayName} total stack is now {item.StackSize}.");
         }
         else
@@ -36,8 +39,11 @@ public class Inventory : MonoBehaviour
             InventoryItem newItem = new InventoryItem(itemData);
             InventoryItemList.Add(newItem);
             itemDictionary.Add(itemData, newItem);
+            OnResourceAmountChanged?.Invoke();
             Debug.Log($"Added {itemData.DisplayName} to the inventory for the first time.");
         }
+
+        
     }
 
     public void Remove(ResourceData itemData)
@@ -50,6 +56,11 @@ public class Inventory : MonoBehaviour
                 InventoryItemList.Remove(item);
                 itemDictionary.Remove(itemData);
             }
+            OnResourceAmountChanged?.Invoke();
+        }
+        else
+        {
+            Debug.Log($"There is no item such as {itemData.DisplayName}");
         }
     }
 

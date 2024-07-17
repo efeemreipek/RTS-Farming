@@ -40,12 +40,10 @@ public class MainBuildingNode : Node
         if (Inventory.Instance.GetResourceStackSize(GameAssets.Instance.foodResourceData) >= unitCost && canSpawnUnit)
         {
             unitSpawnButton.interactable = true;
-            //UIManager.Instance.GetUnitSpawnTimerImage().gameObject.SetActive(false);
         }
         else
         {
             unitSpawnButton.interactable = false;
-            //UIManager.Instance.GetUnitSpawnTimerImage().gameObject.SetActive(true);
             UIManager.Instance.GetUnitSpawnTimerImage().fillAmount = timer.GetRemainingTimeNormalized();
         }
     }

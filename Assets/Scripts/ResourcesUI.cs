@@ -12,22 +12,11 @@ public class ResourcesUI : MonoBehaviour
     }
     private void OnEnable()
     {
-        Unit.OnResourceGathered += Unit_OnResourceGathered;
-        MainBuildingNode.OnUnitSpawned += MainBuildingNode_OnUnitSpawned;
+        Inventory.OnResourceAmountChanged += UpdateResourceUI;
     }
     private void OnDisable()
     {
-        Unit.OnResourceGathered -= Unit_OnResourceGathered;
-        MainBuildingNode.OnUnitSpawned -= MainBuildingNode_OnUnitSpawned;
-    }
-
-    private void Unit_OnResourceGathered()
-    {
-        UpdateResourceUI();
-    }
-    private void MainBuildingNode_OnUnitSpawned(Unit unit)
-    {
-        UpdateResourceUI();
+        Inventory.OnResourceAmountChanged -= UpdateResourceUI;
     }
 
     private void UpdateResourceUI()

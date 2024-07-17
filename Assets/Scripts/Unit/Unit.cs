@@ -6,8 +6,6 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour, ISelectable
 {
-    public static Action OnResourceGathered;
-
     public enum State
     {
         Idle,
@@ -29,8 +27,6 @@ public class Unit : MonoBehaviour, ISelectable
     private bool _isThisUnitSelected = false;
     private bool _isGatheringResource = false;
     private bool _canMove = true;
-    //private int _currentResourceAmount = 0;
-    //private int _maxResourceAmount = 3;
     private int _currentEnergy = 0;
     private int _maxEnergy = 5;
 
@@ -222,14 +218,24 @@ public class Unit : MonoBehaviour, ISelectable
     {
         ChangeState(State.Idle);
 
+        float foodConsumption = 0f;
+        float foodConsumptionAdditive = 1f / _maxEnergy;
+
         while(_currentEnergy < _maxEnergy)
         {
             yield return new WaitForSeconds(1f);
             _currentEnergy++;
+            foodConsumption += foodConsumptionAdditive;
             print("++");
         }
 
         yield return null;
+
+        if(foodConsumption >= 0.5f)
+        {
+            Inventory.Instance.Remove(GameAssets.Instance.foodResourceData);
+            foodConsumption = 0f;
+        }
 
         if (_resourceNode.CanGatherResource())
         {
@@ -245,7 +251,6 @@ public class Unit : MonoBehaviour, ISelectable
     {
         _isGatheringResource = false;
         _resourceNode.DecrementResourceAmount();
-        OnResourceGathered?.Invoke();
         _currentEnergy = Mathf.Max(_currentEnergy - 1, 0);
         if(_currentEnergy <= 0)
         {
