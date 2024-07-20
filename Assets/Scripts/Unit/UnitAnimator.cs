@@ -8,6 +8,7 @@ public class UnitAnimator : MonoBehaviour
     private int animMineHash;
     private int animCutHash;
     private int animFishHash;
+    private int animGatherHash;
 
     private Animator _animator;
     private AnimatorStateInfo _animatorStateInfo;
@@ -20,6 +21,7 @@ public class UnitAnimator : MonoBehaviour
         animMineHash = Animator.StringToHash("Mine");
         animCutHash = Animator.StringToHash("Cut");
         animFishHash = Animator.StringToHash("Fish");
+        animGatherHash = Animator.StringToHash("Gather");
 
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
     }
@@ -41,6 +43,10 @@ public class UnitAnimator : MonoBehaviour
     public void TriggerFish()
     {
         _animator.SetTrigger(animFishHash);
+    }
+    public void TriggerGather()
+    {
+        _animator.SetTrigger(animGatherHash);
     }
 
     public float GetCurrentAnimationLength()

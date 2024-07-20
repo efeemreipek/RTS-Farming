@@ -147,9 +147,13 @@ public class Unit : MonoBehaviour, ISelectable
             {
                 _unitAnimator.TriggerCut();
             }
-            else if(resourceNode is FishResourceNode)
+            else if(resourceNode is FishFoodResourceNode)
             {
                 _unitAnimator.TriggerFish();
+            }
+            else if (resourceNode is BerryFoodResourceNode)
+            {
+                _unitAnimator.TriggerGather();
             }
             _isGatheringResource = true;
             yield return new WaitForSeconds(_unitAnimator.GetCurrentAnimationLength());

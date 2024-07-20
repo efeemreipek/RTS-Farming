@@ -350,7 +350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 946624564566890833}
   - component: {fileID: 3936155641971543809}
-  - component: {fileID: 397492019554863060}
+  - component: {fileID: 7423861653526038848}
   m_Layer: 0
   m_Name: FishingResourceNode
   m_TagString: Node
@@ -397,7 +397,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 2, z: 2}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &397492019554863060
+--- !u!114 &7423861653526038848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -406,12 +406,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7570184992653782536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31044e5b0eee0eb469ed8676b049232c, type: 3}
+  m_Script: {fileID: 11500000, guid: c086a633c178d8840977fc04f3e1555d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selectedQuad: {fileID: 9206266425896208347}
   nodeName: fishing node
   ResourceData: {fileID: 11400000, guid: ac557682d658d5e4797f7229acb88ebd, type: 2}
+  _maxResourceAmount: 6
+  _regenerationTime: 15
 --- !u!1 &9206266425896208347
 GameObject:
   m_ObjectHideFlags: 0
