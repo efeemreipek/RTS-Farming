@@ -67,18 +67,6 @@ public class UnitMover : MonoBehaviour
                     }
                 }
             }
-            // Right clicked storage node empty inventory
-            //else if (hit.collider.TryGetComponent(out StorageNode storageNode))
-            //{
-            //    List<Unit> selectedUnitsList = unitSelector.GetSelectedUnitsList();
-            //    foreach (Unit selectedUnit in selectedUnitsList)
-            //    {
-            //        if (selectedUnit != null)
-            //        {
-            //            selectedUnit.MoveToStorage(storageNode.transform.position);
-            //        }
-            //    }
-            //}
         }
     }
 

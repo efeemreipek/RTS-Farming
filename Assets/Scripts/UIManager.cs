@@ -27,19 +27,27 @@ public class UIManager : MonoBehaviour
     // IF NODE IS MAIN BUILDING
     [SerializeField] private GameObject spawnUnitButtonGO;
     [SerializeField] private Image unitSpawnTimerImage;
+    [Header("Building")]
+    [SerializeField] private GameObject buildingSettingsPanel;
 
 
 
     public TextMeshProUGUI GetStoneAmountText() => stoneAmountText;
     public TextMeshProUGUI GetWoodAmountText() => woodAmountText;
     public TextMeshProUGUI GetFoodAmountText() => foodAmountText;
+
     public GameObject GetNodeInfoPanel() => nodeInfoPanel;
     public void SetActiveNodeInfoPanel(bool cond) => nodeInfoPanel.SetActive(cond);
     public TextMeshProUGUI GetNodeNameText() => nodeNameText;
+
     public TextMeshProUGUI GetCurrentAmountText() => currentAmountText;
     public TextMeshProUGUI GetMaxAmountText() => maxAmountText;
+
     public GameObject GetSpawnUnitButtonGO() => spawnUnitButtonGO;
     public Image GetUnitSpawnTimerImage() => unitSpawnTimerImage;
+
+    public GameObject GetBuildingSettingsPanel() => buildingSettingsPanel;
+
     public void InitializeNodeInfoPanel(Node node)
     {
         nodeNameText.text = node.GetNodeName().ToUpperInvariant();

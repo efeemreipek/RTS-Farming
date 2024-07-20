@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,12 +30,16 @@ public class NodeSelector : MonoBehaviour
 
         mouseLeftClick.performed += MouseLeftClick_Performed;
         gameControlActions.Enable();
+
+        BuildingSystem.OnNodeBuilt += BuildingSystem_OnNodeBuilt;
     }
 
     private void OnDisable()
     {
         mouseLeftClick.performed -= MouseLeftClick_Performed;
         gameControlActions.Disable();
+
+        BuildingSystem.OnNodeBuilt -= BuildingSystem_OnNodeBuilt;
     }
 
     private void Start()
@@ -129,5 +134,10 @@ public class NodeSelector : MonoBehaviour
                 _node.IsSelected(false);
             }
         }
+    }
+
+    private void BuildingSystem_OnNodeBuilt(Node obj)
+    {
+        allNodesList.Add(obj);
     }
 }

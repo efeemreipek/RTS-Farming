@@ -26,5 +26,6 @@ public abstract class Node : MonoBehaviour, ISelectable
         return isThisNodeSelected;
     }
     public List<Vector3> GetMovePointList() => movePointList;
-    public string GetNodeName() => nodeName;    
+    public string GetNodeName() => nodeName;  
+    protected void SetNodeName(string name) => nodeName = name;
 }
