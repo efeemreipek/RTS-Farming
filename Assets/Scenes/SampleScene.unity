@@ -304,6 +304,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2234597015712238676, guid: dd59439f3e65e7b4f98c52e97da6313d,
+        type: 3}
+      propertyPath: m_Carve
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7715129568457682894, guid: dd59439f3e65e7b4f98c52e97da6313d,
         type: 3}
       propertyPath: m_Name
@@ -2542,6 +2547,8 @@ MonoBehaviour:
   stoneResourceData: {fileID: 11400000, guid: 1d9640c3427dc224a9c5e4087756c2b7, type: 2}
   woodResourceData: {fileID: 11400000, guid: 6766a054f7c253347b9dd746fb3ee0f3, type: 2}
   foodResourceData: {fileID: 11400000, guid: ac557682d658d5e4797f7229acb88ebd, type: 2}
+  emptyBuildingNode: {fileID: 4258276859114210365, guid: e37205f561dea10419466c6e2c7a295d,
+    type: 3}
 --- !u!1 &1238416004
 GameObject:
   m_ObjectHideFlags: 0
@@ -3649,7 +3656,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 50}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1850164303
 MonoBehaviour:
@@ -3671,7 +3678,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GOLD NODE
+  m_text: STONE NODE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3701,12 +3708,12 @@ MonoBehaviour:
   m_fontSize: 48
   m_fontSizeBase: 48
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 48
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -3714,7 +3721,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

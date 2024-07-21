@@ -90,6 +90,7 @@ public class BuildingSystem : MonoBehaviour
     public void ChangeIsBuildingSelected(bool cond) => isBuildingSelected = cond;
     public void InstantiateBuilding(int index)
     {
-        _currentBuilding = Instantiate(buildingsList[index]);
+        _currentBuilding = Instantiate(GameAssets.Instance.emptyBuildingNode);
+        _currentBuilding.GetComponent<EmptyBuildingNode>().SetBuildNode(buildingsList[index].GetComponent<Node>());
     }
 }

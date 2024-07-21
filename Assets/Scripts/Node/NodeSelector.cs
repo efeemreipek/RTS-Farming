@@ -31,7 +31,9 @@ public class NodeSelector : MonoBehaviour
         mouseLeftClick.performed += MouseLeftClick_Performed;
         gameControlActions.Enable();
 
-        BuildingSystem.OnNodeBuilt += BuildingSystem_OnNodeBuilt;
+        BuildingSystem.OnNodeBuilt += OnNodeBuilt;
+        Unit.OnNodeBuilt += OnNodeBuilt;
+        EmptyBuildingNode.OnNodeDestroyed += OnNodeDestroyed;
     }
 
     private void OnDisable()
@@ -39,7 +41,9 @@ public class NodeSelector : MonoBehaviour
         mouseLeftClick.performed -= MouseLeftClick_Performed;
         gameControlActions.Disable();
 
-        BuildingSystem.OnNodeBuilt -= BuildingSystem_OnNodeBuilt;
+        BuildingSystem.OnNodeBuilt -= OnNodeBuilt;
+        Unit.OnNodeBuilt -= OnNodeBuilt;
+        EmptyBuildingNode.OnNodeDestroyed -= OnNodeDestroyed;
     }
 
     private void Start()
@@ -136,8 +140,12 @@ public class NodeSelector : MonoBehaviour
         }
     }
 
-    private void BuildingSystem_OnNodeBuilt(Node obj)
+    private void OnNodeBuilt(Node obj)
     {
         allNodesList.Add(obj);
+    }
+    private void OnNodeDestroyed(Node obj)
+    {
+        allNodesList.Remove(obj);
     }
 }

@@ -6,13 +6,17 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour, ISelectable
 {
+    public static Action<Node> OnNodeBuilt;
+
     public enum State
     {
         Idle,
         Moving,
         MovingToResource,
         MovingToFoodHouse,
-        GatheringResource
+        MovingToBuild,
+        GatheringResource,
+        Building
     }
 
     [SerializeField] private GameObject selectedQuad;
@@ -21,6 +25,7 @@ public class Unit : MonoBehaviour, ISelectable
     private NavMeshAgent _unitNMA;
     private ResourceNode _resourceNode;
     private FoodHouseNode _foodHouseNode;
+    private EmptyBuildingNode _emptyBuildingNode;
     private State _currentState;
     private Vector3 _targetPosition;
 
@@ -67,9 +72,17 @@ public class Unit : MonoBehaviour, ISelectable
                     StartCoroutine(RestoreEnergy());
                 }
                 break;
+            case State.MovingToBuild:
+                if (CheckIfDestinationIsReached())
+                {
+                    Build();
+                }
+                break;
             case State.GatheringResource:
                 RotateTowardsResource();
                 StartCoroutine(GatherResource(_resourceNode));
+                break;
+            case State.Building:
                 break;
         }
     }
@@ -125,6 +138,14 @@ public class Unit : MonoBehaviour, ISelectable
 
         _unitNMA.SetDestination(_targetPosition);
         ChangeState(State.MovingToResource);
+    }
+    public void MoveToBuild(EmptyBuildingNode emptyBuildingNode)
+    {
+        _emptyBuildingNode = emptyBuildingNode;
+        _targetPosition = FindClosestNodeMovePoint(_emptyBuildingNode);
+
+        _unitNMA.SetDestination(_targetPosition);
+        ChangeState(State.MovingToBuild);
     }
     private void MoveToFoodHouse()
     {
@@ -249,6 +270,13 @@ public class Unit : MonoBehaviour, ISelectable
         {
             ChangeState(State.Idle);
         }
+    }
+    private void Build()
+    {
+        OnNodeBuilt?.Invoke(_emptyBuildingNode.GetNodeToBuild());
+        _emptyBuildingNode.Build();
+        _emptyBuildingNode = null;
+        ChangeState(State.Idle);
     }
 
     public void OnAnimationEnd()

@@ -55,6 +55,18 @@ public class UnitMover : MonoBehaviour
                     }
                 }
             }
+            // Right clicked empty building to build
+            if (hit.collider.TryGetComponent(out EmptyBuildingNode emptyBuildingNode))
+            {
+                List<Unit> selectedUnitsList = unitSelector.GetSelectedUnitsList();
+                foreach (Unit selectedUnit in selectedUnitsList)
+                {
+                    if (selectedUnit != null)
+                    {
+                        selectedUnit.MoveToBuild(emptyBuildingNode);
+                    }
+                }
+            }
             // Right clicked ground to move
             else if (hit.collider.CompareTag("Ground"))
             {

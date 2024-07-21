@@ -16,4 +16,5 @@ public class GameAssets : MonoBehaviour
     public ResourceData stoneResourceData;
     public ResourceData woodResourceData;
     public ResourceData foodResourceData;
+    public GameObject emptyBuildingNode;
 }
